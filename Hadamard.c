@@ -49,6 +49,7 @@ int* hadamard(int *matrice,int *matrice_temp,int nb_user,int nb_user_croissant)
 
   if (nb_user_croissant>nb_user) {
     free(matrice_temp);
+
     return matrice;
   }
 
@@ -106,22 +107,38 @@ int* hadamard(int *matrice,int *matrice_temp,int nb_user,int nb_user_croissant)
   }
 }
 
-
+int* seqPlusSeq(int* seq1,int* seq2,int tailleSeq)
+{
+  int *seqFinale = malloc(tailleSeq*sizeof(int));
+  for (int i = 0; i < tailleSeq; i++) {
+    seqFinale[i] = seq1[i] + seq2[i];
+  }
+  return seqFinale;
+}
 
 int main()
 {
   int *matrice;
   int *matrice_temp;
   int nb_user = 8;
+  int *seqFinale;
+  int seq1[]={1,-1,1,-1,1,-1,1,-1,-1,1,-1,1,-1,1,-1,1,1,-1,1,-1,1,-1,1,-1};
+  int seq2[]={-1,1,1,-1,-1,1,1,-1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1,1,-1,-1,1};
 
   matrice = malloc(nb_user*nb_user*sizeof(int));
   matrice_temp = malloc(nb_user*nb_user*sizeof(int));
 
 
-  hadamard(matrice,matrice_temp,nb_user,1);
+  matrice = hadamard(matrice,matrice_temp,nb_user,1);
+  affiche_matrice(matrice,nb_user);
+  seqFinale=seqPlusSeq(seq1,seq2,nb_user*3);
+  for (int i = 0; i < nb_user*3; i++) {
+    printf("%i ",seqFinale[i]);
+  }
+  printf("\n");
 
 
-
+  free(seqFinale);
   //free(matrice);
 
 }
