@@ -14,19 +14,32 @@ void initi_matrice(int *matrice,int tailleMatrice)
   }
 }
 
-void affiche_matrice(int *matrice,int tailleMatrice)
+void affiche_matrice(int *matrice,int tailleMatrice,int isVector)
+
 {
-  printf("nb_user:%i\n",tailleMatrice);
-  for(int i=0; i<tailleMatrice ;i++)
+  if(isVector)
   {
-    for(int j=0; j<tailleMatrice ;j++)
-    {
-      printf("%2.i ",matrice[i*tailleMatrice+j]);
-    }
-    printf("\n");
+      for (int i = 0; i < tailleMatrice; ++i)
+      {
+          printf("%i",matrice[i]);
+      }
   }
-  printf("\n");
+  else
+  {
+      printf("nb_user:%i\n",tailleMatrice);
+      for(int i=0; i<tailleMatrice ;i++)
+      {
+          for(int j=0; j<tailleMatrice ;j++)
+          {
+              printf("%2.i ",matrice[i*tailleMatrice+j]);
+          }
+          printf("\n");
+      }
+      printf("\n");
+  }
+
 }
+
 
 int* copie_matrice(int *matrice_src,int *matrice_dest,int tailleMatrice)
 {
@@ -38,6 +51,18 @@ int* copie_matrice(int *matrice_src,int *matrice_dest,int tailleMatrice)
     }
   }
   return matrice_dest;
+}
+
+int createMessage(int *buf,int size,char *string){
+    for (int i = 0; i < size; ++i) {
+        buf[i] = atoi(&string[i]);
+    }
+    return 0;
+}
+
+
+int* transcript(int *matrice, int *messsage){
+    return 0;
 }
 
 
@@ -55,7 +80,7 @@ int* hadamard(int *matrice,int *matrice_temp,int nb_user)
     matrice[0*nb_user+0]=1;
     matrice_temp[0*nb_user+0]=1;
 
-    affiche_matrice(matrice,nb_user);
+    affiche_matrice(matrice,nb_user,0);
     return hadamard(matrice,matrice_temp,nb_user*2);
   }
 
@@ -99,7 +124,7 @@ int* hadamard(int *matrice,int *matrice_temp,int nb_user)
 
     copie_matrice(matrice,matrice_temp,nb_user);
 
-    affiche_matrice(matrice,nb_user);
+    affiche_matrice(matrice,nb_user,0);
     return hadamard(matrice,matrice_temp,nb_user*2);
   }
 }
@@ -110,12 +135,21 @@ int main()
 {
   int *matrice;
   int *matrice_temp;
+  int *message;
   int nb_user = 1;
 
   matrice = malloc(nb_user*nb_user*sizeof(int));
   matrice_temp = malloc(nb_user*nb_user*sizeof(int));
 
+
+
+  char *msg_to_send = "101";
+  message = malloc(3 * sizeof(int));
+  createMessage(message,3,msg_to_send);
   hadamard(matrice,matrice_temp,nb_user);
+  printf("---------------------- \n");
+
+  affiche_matrice(message,3,1);
 
 
 
