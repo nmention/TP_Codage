@@ -115,7 +115,6 @@ int main()
   matrice = malloc(nb_user*nb_user*sizeof(int));
   matrice_temp = malloc(nb_user*nb_user*sizeof(int));
 
-  //initi_matrice(matrice,tailleMatrice);
   hadamard(matrice,matrice_temp,nb_user);
 
 
