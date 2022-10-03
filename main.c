@@ -3,6 +3,8 @@
 //
 #include <malloc.h>
 #include "math.h"
+#include "matrix.h"
+
 
 #include "stdio.h"
 
@@ -49,12 +51,25 @@ int hadamardTest(int nb) {
     size_t n = sizeof(matrice);
     printf("%zu",n);
 }
+
+
+int trad(int * msg, int *row){
+
+
+}
 int main(){
     double test = log2(16);
+    matrix a = createMatrix(2,2);
+    //printf("%lu",sizeof(a));
+    /*int size = get_size(&a);
+    printf("%d",size);*/
+    //printMatrix(&a);
+
+
    /* printf("%f",test);
     printf("\n");
     hadamard( 4);*/
-    hadamardTest(1);
+    hadamardTest(2);
     /*int hadamard[2][2];
     for (int i = 0; i < 2 ; ++i) {
         for (int j = 0; j < i ; ++j) {
