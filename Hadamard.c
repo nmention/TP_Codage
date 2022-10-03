@@ -14,32 +14,19 @@ void initi_matrice(int *matrice,int tailleMatrice)
   }
 }
 
-void affiche_matrice(int *matrice,int tailleMatrice,int isVector)
-
+void affiche_matrice(int *matrice,int tailleMatrice)
 {
-  if(isVector)
+  printf("nb_user:%i\n",tailleMatrice);
+  for(int i=0; i<tailleMatrice ;i++)
   {
-      for (int i = 0; i < tailleMatrice; ++i)
-      {
-          printf("%i",matrice[i]);
-      }
+    for(int j=0; j<tailleMatrice ;j++)
+    {
+      printf("%2.i ",matrice[i*tailleMatrice+j]);
+    }
+    printf("\n");
   }
-  else
-  {
-      printf("nb_user:%i\n",tailleMatrice);
-      for(int i=0; i<tailleMatrice ;i++)
-      {
-          for(int j=0; j<tailleMatrice ;j++)
-          {
-              printf("%2.i ",matrice[i*tailleMatrice+j]);
-          }
-          printf("\n");
-      }
-      printf("\n");
-  }
-
+  printf("\n");
 }
-
 
 int* copie_matrice(int *matrice_src,int *matrice_dest,int tailleMatrice)
 {
@@ -53,79 +40,69 @@ int* copie_matrice(int *matrice_src,int *matrice_dest,int tailleMatrice)
   return matrice_dest;
 }
 
-int createMessage(int *buf,int size,char *string){
-    for (int i = 0; i < size; ++i) {
-        buf[i] = atoi(&string[i]);
-    }
-    return 0;
-}
-
-
-int* transcript(int *matrice, int *messsage){
-    return 0;
-}
 
 
 
-
-int* hadamard(int *matrice,int *matrice_temp,int nb_user)
+int* hadamard(int *matrice,int *matrice_temp,int nb_user,int nb_user_croissant)
 {
 
-  if (nb_user>8) {
+
+  if (nb_user_croissant>nb_user) {
     free(matrice_temp);
     return matrice;
   }
 
-  if (nb_user==1) {
-    matrice[0*nb_user+0]=1;
-    matrice_temp[0*nb_user+0]=1;
+  if (nb_user_croissant==1) {
+    matrice[0*nb_user_croissant+0]=1;
+    matrice_temp[0*nb_user_croissant+0]=1;
 
-    affiche_matrice(matrice,nb_user,0);
-    return hadamard(matrice,matrice_temp,nb_user*2);
+    affiche_matrice(matrice,nb_user_croissant);
+    return hadamard(matrice,matrice_temp,nb_user,nb_user_croissant*2);
   }
 
   else
   {
-    matrice = realloc(matrice,nb_user*nb_user*sizeof(int));
-    initi_matrice(matrice,nb_user);
-    int nb_user_temp = nb_user/2;
-    for(int i=0; i < nb_user ;i++)
+    matrice = realloc(matrice,nb_user_croissant*nb_user_croissant*sizeof(int));
+    initi_matrice(matrice,nb_user_croissant);
+    int nb_user_temp = nb_user_croissant/2;
+    for(int i=0; i < nb_user_croissant ;i++)
     {
-      for(int j=0;  j < nb_user ;j++)
+      for(int j=0;  j < nb_user_croissant ;j++)
       {
-        if (i<nb_user/2 && j<nb_user/2)
+        if (i<nb_user_croissant/2 && j<nb_user_croissant/2)
         {
 
-          matrice[i*nb_user+j]=matrice_temp[i*nb_user_temp+j];
+          matrice[i*nb_user_croissant+j]=matrice_temp[i*nb_user_temp+j];
 
         }
-        else if (i<nb_user/2 && j>=nb_user/2)
+        else if (i<nb_user_croissant/2 && j>=nb_user_croissant/2)
         {
 
-          matrice[i*nb_user+j]=matrice_temp[i*nb_user_temp+(j%(nb_user_temp))];
+          matrice[i*nb_user_croissant+j]=matrice_temp[i*nb_user_temp+(j%(nb_user_temp))];
 
 
         }
-        else if (i>=nb_user/2 && j<nb_user/2)
+        else if (i>=nb_user_croissant/2 && j<nb_user_croissant/2)
         {
 
-          matrice[i*nb_user+j]=matrice_temp[(i%(nb_user_temp))*nb_user_temp+j];
+          matrice[i*nb_user_croissant+j]=matrice_temp[(i%(nb_user_temp))*nb_user_temp+j];
 
         }
-        else if (i>=nb_user/2 && j>=nb_user/2)
+        else if (i>=nb_user_croissant/2 && j>=nb_user_croissant/2)
         {
 
-          matrice[i*nb_user+j]=-matrice_temp[(i%(nb_user_temp))*nb_user_temp+(j%(nb_user_temp))];
+          matrice[i*nb_user_croissant+j]=-matrice_temp[(i%(nb_user_temp))*nb_user_temp+(j%(nb_user_temp))];
         }
+
       }
     }
 
-    matrice_temp = realloc(matrice_temp,nb_user*nb_user*sizeof(int));
+    matrice_temp = realloc(matrice_temp,nb_user_croissant*nb_user_croissant*sizeof(int));
 
-    copie_matrice(matrice,matrice_temp,nb_user);
+    copie_matrice(matrice,matrice_temp,nb_user_croissant);
 
-    affiche_matrice(matrice,nb_user,0);
-    return hadamard(matrice,matrice_temp,nb_user*2);
+    affiche_matrice(matrice,nb_user_croissant);
+    return hadamard(matrice,matrice_temp,nb_user,nb_user_croissant*2);
   }
 }
 
@@ -135,21 +112,13 @@ int main()
 {
   int *matrice;
   int *matrice_temp;
-  int *message;
-  int nb_user = 1;
+  int nb_user = 8;
 
   matrice = malloc(nb_user*nb_user*sizeof(int));
   matrice_temp = malloc(nb_user*nb_user*sizeof(int));
 
 
-
-  char *msg_to_send = "101";
-  message = malloc(3 * sizeof(int));
-  createMessage(message,3,msg_to_send);
-  hadamard(matrice,matrice_temp,nb_user);
-  printf("---------------------- \n");
-
-  affiche_matrice(message,3,1);
+  hadamard(matrice,matrice_temp,nb_user,1);
 
 
 
