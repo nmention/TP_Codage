@@ -2,11 +2,11 @@
 // Created by nmention on 26/09/22.
 //
 #include <malloc.h>
-#include "math.h"
+#include <math.h>
 #include "matrix.h"
 
 
-#include "stdio.h"
+#include <stdio.h>
 
 
 
@@ -58,18 +58,46 @@ int trad(int * msg, int *row){
 
 }
 int main(){
-    double test = log2(16);
+    //double test = log2(16);
     matrix a = createMatrix(2,2);
+    matrix b;
+    matrix c;
     //printf("%lu",sizeof(a));
-    /*int size = get_size(&a);
-    printf("%d",size);*/
-    //printMatrix(&a);
+    int size = get_size(&a);
+    fillMatrix(&a);
+    printf("%d \n",size);
+    setValuebyIndex(1*a.columns + 1,-1,&a);
+    printMatrix(&a);
+    getRow(0,&a);
+
+    b = inversMatrix(a);
+    printMatrix(&b);
+    printMatrix(&a);
+
+    c = constrMatrix(1);
+    printMatrix(&c);
+
+
+    matrix h = fillHadamardMatrix(&c);
+
+    printMatrix(&h);
+    matrix f = fillHadamardMatrix(&h);
+    printMatrix(&f);
+
+    printf("\n\n");
+
+    matrix g = fillHadamardMatrix(&f);
+    printMatrix(&g);
+
+    //printf("%d",3 & 2);
+
+
 
 
    /* printf("%f",test);
     printf("\n");
     hadamard( 4);*/
-    hadamardTest(2);
+//hadamardTest(2);
     /*int hadamard[2][2];
     for (int i = 0; i < 2 ; ++i) {
         for (int j = 0; j < i ; ++j) {

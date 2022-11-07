@@ -14,6 +14,8 @@ void initi_matrice(int *matrice,int tailleMatrice)
   }
 }
 
+
+
 void affiche_matrice(int *matrice,int tailleMatrice)
 {
   printf("nb_user:%i\n",tailleMatrice);
@@ -38,6 +40,41 @@ int* copie_matrice(int *matrice_src,int *matrice_dest,int tailleMatrice)
     }
   }
   return matrice_dest;
+}
+
+int createMessage(int *buf,int size,int *value){
+
+    for (int i = 0; i < size; i++) {
+        buf[i] = value[i];
+        printf("%i",buf[i]);
+    }
+    return 0;
+}
+
+
+int transcript(int *matrice, int *messsage,int row, int size_msg, int size_matrix,int *target){
+    printf("%d!!!!",target[0]);
+    target[0] = 17;
+    printf("%d!!!!",target[0]);
+
+    /*int *transcription;
+    transcription = malloc(size_msg * size_matrix *sizeof(int));*/
+    for (int i = 0; i < size_msg ; ++i) {
+        for (int j = 0; j < size_matrix ; ++j) {
+            if (messsage[i] == 0 ){
+                target[size_matrix * i + j] = matrice[row*size_matrix+j]*-1;
+                printf("case : %d \n",target[size_matrix * i + j]);
+            }
+            else{
+                printf("case : %d \n",target[0]);
+                printf("case : %d \n",matrice[0]);
+                target[size_matrix * i +j] = matrice[row*size_matrix+j];
+                printf("case : %d \n",target[0]);
+            }
+        }
+    }
+
+    return 0;
 }
 
 
@@ -118,6 +155,7 @@ int* seqPlusSeq(int* seq1,int* seq2,int tailleSeq)
 
 int main()
 {
+    int *message;
   int *matrice;
   int *matrice_temp;
   int nb_user = 8;
@@ -137,6 +175,19 @@ int main()
   }
   printf("\n");
 
+  int msg[] = {1,1,0};
+  message = malloc(3 * sizeof(int));
+  createMessage(message,3,msg);
+  hadamard(matrice,matrice_temp,nb_user,1);
+
+  int *target;
+  target = malloc(3 * 8 *sizeof(int));
+  transcript(matrice,msg,1,3,8,target);
+
+
+  affiche_matrice(message,3);
+  printf("---------------------- \n");
+  affiche_matrice(target,8);
 
   free(seqFinale);
   //free(matrice);

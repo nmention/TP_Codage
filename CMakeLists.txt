@@ -4,4 +4,5 @@ project(TP C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(TP
-        Hadamard.c)
+        matrix.c main.c)
+target_link_libraries(TP PRIVATE m)
